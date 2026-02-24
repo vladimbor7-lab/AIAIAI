@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel AI — ИИ-ассистент для турагентств</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08070a;--bg2:#0f0e14;--bg3:#161520;--card:#131219;--gold:#d4a843;--gold2:#f0c865;--goldt:rgba(212,168,67,.12);--cream:#f0ebe0;--muted:#6b6878;--dim:rgba(240,235,224,.35);--white:#fff;--green:#2ecc71;--blue:#3b82f6;--border:rgba(212,168,67,.15);--font:'DM Sans',-apple-system,sans-serif;--serif:'Instrument Serif',Georgia,serif;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--bg);color:var(--cream);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 56px;background:rgba(8,7,10,.88);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.04);}
+.logo{font-family:var(--serif);font-size:20px;color:var(--white);}
+.logo em{font-style:italic;color:var(--gold2);}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nl{font-size:13px;color:var(--muted);cursor:pointer;transition:color .2s;text-decoration:none;}.nl:hover{color:var(--cream);}
+.nav-cta{font-size:13px;font-weight:600;color:var(--bg);background:var(--gold2);border:none;border-radius:20px;padding:8px 20px;cursor:pointer;transition:all .2s;text-decoration:none;}.nav-cta:hover{background:var(--gold);}
+
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 24px 60px;text-align:center;position:relative;overflow:hidden;}
+.orb{position:absolute;border-radius:50%;pointer-events:none;}
+.orb1{top:-5%;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(212,168,67,.06) 0%,transparent 65%);}
+.orb2{bottom:-20%;right:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,.04) 0%,transparent 65%);}
+
+.badge{display:inline-flex;align-items:center;gap:7px;background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.2);color:#2ecc71;border-radius:30px;padding:5px 14px;font-size:12px;font-weight:600;margin-bottom:28px;animation:up .6s ease both;}
+.pulse{width:6px;height:6px;border-radius:50%;background:#2ecc71;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+h1{font-family:var(--serif);font-size:clamp(46px,7vw,86px);font-weight:400;line-height:1.05;color:var(--white);margin-bottom:12px;animation:up .6s .07s ease both;}
+h1 em{font-style:italic;color:var(--gold2);}
+.h1d{color:var(--dim);display:block;}
+.hsub{font-size:17px;color:var(--muted);line-height:1.65;max-width:500px;margin:0 auto 20px;animation:up .6s .14s ease both;}
+
+.pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px;animation:up .6s .2s ease both;}
+.pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:6px 14px;font-size:13px;color:var(--dim);font-weight:500;}
+
+.hbtns{display:flex;gap:12px;justify-content:center;animation:up .6s .26s ease both;}
+.btn-g{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);border:none;border-radius:30px;padding:15px 32px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;transition:all .25s;}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(212,168,67,.25);}
+.btn-gh{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--dim);border-radius:30px;padding:15px 32px;font-family:var(--font);font-size:15px;cursor:pointer;transition:all .25s;}
+.btn-gh:hover{border-color:rgba(255,255,255,.25);color:var(--cream);}
+.cnote{font-size:12px;color:var(--muted);margin-top:12px;animation:up .6s .32s ease both;}
+
+@keyframes up{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+/* DEMO */
+.demo-wrap{display:grid;grid-template-columns:1fr 400px;gap:56px;align-items:start;max-width:1140px;margin:0 auto;padding:96px 56px;}
+.se{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.st{font-family:var(--serif);font-size:clamp(30px,3.5vw,44px);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:14px;}
+.st em{font-style:italic;color:var(--gold2);}
+.ss{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:28px;}
+
+.fbox{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:22px;margin-bottom:14px;}
+.ftitle{font-size:13px;font-weight:600;color:var(--cream);margin-bottom:16px;}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.fg{display:flex;flex-direction:column;gap:5px;}.fg.full{grid-column:1/-1;}
+.flb{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.fsel,.finp{background:var(--bg3);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:9px 11px;font-family:var(--font);font-size:13px;color:var(--cream);outline:none;-webkit-appearance:none;cursor:pointer;transition:border .2s;}
+.fsel:focus,.finp:focus{border-color:rgba(212,168,67,.4);}
+.fsel option{background:var(--bg3);}
+
+input[type=range]{width:100%;height:3px;border-radius:10px;background:linear-gradient(to right,var(--gold) 0%,var(--gold) 50%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.1) 100%);outline:none;-webkit-appearance:none;cursor:pointer;margin-top:6px;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold2);border:2px solid var(--bg);cursor:pointer;}
+.rrow{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px;}
+
+.sbtn{width:100%;padding:12px;margin-top:6px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);border:none;border-radius:12px;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;}
+.sbtn:hover{transform:translateY(-1px);}
+.sbtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+.cframe{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:24px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.5);position:sticky;top:100px;}
+.chdr{background:linear-gradient(135deg,#021018,#04304a);padding:14px 18px;display:flex;align-items:center;gap:11px;}
+.cav{width:38px;height:38px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#f97316,#fbbf24);display:flex;align-items:center;justify-content:center;font-size:17px;position:relative;}
+.cav::after{content:'';width:9px;height:9px;border-radius:50%;background:#2ecc71;border:2px solid #021018;position:absolute;bottom:1px;right:1px;}
+.cname{font-size:14px;font-weight:600;color:#fff;}.cst{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px;}
+
+.cfeed{height:340px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#0a0a0f;scrollbar-width:thin;scrollbar-color:#222 transparent;}
+.cfeed::-webkit-scrollbar{width:3px;}.cfeed::-webkit-scrollbar-thumb{background:#222;}
+
+.mr{display:flex;gap:7px;animation:mi .25s ease;}.mr.u{flex-direction:row-reverse;}
+@keyframes mi{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+.mav{width:26px;height:26px;border-radius:50%;flex-shrink:0;align-self:flex-end;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.mav.b{background:linear-gradient(135deg,#f97316,#fbbf24);}.mav.u{background:linear-gradient(135deg,#04304a,#0a6080);}
+.bub{max-width:82%;padding:9px 13px;border-radius:16px;font-size:13px;line-height:1.55;}
+.mr:not(.u) .bub{background:#161620;color:rgba(255,255,255,.82);border-top-left-radius:3px;}
+.mr.u .bub{background:#04304a;color:#fff;border-top-right-radius:3px;}
+
+.tbub{background:#161620;border-radius:16px 16px 16px 3px;padding:11px 14px;}
+.dots{display:flex;gap:4px;align-items:center;}
+.dots span{width:5px;height:5px;border-radius:50%;background:#333;animation:dk 1.3s infinite;}
+.dots span:nth-child(2){animation-delay:.2s;}.dots span:nth-child(3){animation-delay:.4s;}
+@keyframes dk{0%,60%,100%{opacity:.3;transform:translateY(0);}30%{opacity:1;transform:translateY(-4px);}}
+
+.qbar{background:#0a0a0f;border-top:1px solid #151520;padding:8px 12px;display:flex;flex-wrap:wrap;gap:5px;min-height:44px;}
+.qbtn{background:transparent;border:1px solid #1a2a3a;color:#60a5fa;border-radius:12px;padding:4px 11px;font-size:11px;font-family:var(--font);font-weight:500;cursor:pointer;transition:all .18s;}.qbtn:hover{background:#0a2030;}
+
+.cinp-row{background:var(--card);border-top:1px solid rgba(255,255,255,.04);padding:10px 12px;display:flex;gap:8px;align-items:center;}
+.cinp{flex:1;background:#0f0f18;border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:8px 14px;font-size:13px;font-family:var(--font);color:rgba(255,255,255,.8);outline:none;transition:border .2s;}
+.cinp:focus{border-color:rgba(212,168,67,.3);}.cinp::placeholder{color:rgba(255,255,255,.2);}
+.csend{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:transform .2s;}
+.csend:hover{transform:scale(1.08);}
+.csend svg{width:14px;height:14px;fill:var(--bg);}
+
+/* HOW */
+.sec{padding:96px 56px;}
+.sec-in{max-width:1140px;margin:0 auto;}
+.hgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.04);border-radius:20px;overflow:hidden;margin-top:52px;}
+.hcard{background:var(--bg2);padding:30px 26px;transition:background .25s;}.hcard:hover{background:var(--bg3);}
+.hnum{font-family:var(--serif);font-size:44px;color:rgba(212,168,67,.15);line-height:1;margin-bottom:14px;}
+.hico{font-size:26px;margin-bottom:12px;}
+.htit{font-size:15px;font-weight:600;color:var(--cream);margin-bottom:7px;}.hdsc{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* MECHANICS */
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:52px;}
+.msteps{display:flex;flex-direction:column;gap:16px;}
+.ms{display:flex;gap:14px;align-items:flex-start;padding:18px;background:var(--card);border:1px solid rgba(255,255,255,.05);border-radius:14px;transition:border-color .25s;}
+.ms:hover{border-color:var(--border);}
+.msico{width:38px;height:38px;border-radius:11px;flex-shrink:0;background:var(--goldt);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:17px;}
+.mstit{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:4px;}.msdsc{font-size:13px;color:var(--muted);line-height:1.6;}
+
+.lcard{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:22px;}
+.ltit{font-size:11px;font-weight:600;color:var(--muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:1px;}
+.lr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.lr:last-of-type{border-bottom:none;}
+.lk{font-size:12px;color:var(--muted);}.lv{font-size:13px;font-weight:500;color:var(--cream);}
+.lv.gd{color:var(--gold2);}.lv.gr{color:#2ecc71;}
+.lbtns{display:flex;gap:8px;margin-top:14px;}
+.lb{flex:1;padding:9px;border-radius:9px;font-family:var(--font);font-size:13px;font-weight:600;border:none;cursor:pointer;}
+.lb.call{background:#2ecc71;color:#000;}.lb.msg{background:rgba(255,255,255,.06);color:var(--cream);}
+
+/* SCENARIOS */
+.scgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:52px;}
+.scc{background:var(--bg2);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:26px;transition:all .25s;cursor:pointer;}
+.scc:hover{border-color:var(--border);transform:translateY(-3px);}
+.scf{font-size:30px;margin-bottom:12px;}.scn{font-size:16px;font-weight:600;color:var(--cream);margin-bottom:6px;}
+.scp{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:12px;}
+.scr{background:var(--card);border-radius:10px;padding:9px 12px;font-size:12px;color:var(--dim);line-height:1.6;}
+.scr strong{color:var(--gold2);}
+
+/* TRUST */
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:52px;}
+.tc{background:var(--card);border:1px solid rgba(255,255,255,.05);border-radius:20px;padding:26px;}
+.tst{color:var(--gold2);font-size:13px;margin-bottom:12px;}
+.tq{font-size:14px;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:14px;font-style:italic;}
+.tres{background:rgba(46,204,113,.06);border:1px solid rgba(46,204,113,.15);border-radius:8px;padding:7px 12px;font-size:12px;color:#2ecc71;margin-bottom:14px;}
+.tau{display:flex;align-items:center;gap:10px;}
+.tav{width:34px;height:34px;border-radius:50%;background:var(--goldt);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.tn{font-size:13px;font-weight:600;color:var(--cream);}.tr{font-size:11px;color:var(--muted);}
+
+/* SECURITY */
+.secsec{padding:64px 56px;background:var(--bg3);border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04);}
+.secgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1140px;margin:0 auto;}
+.seci{text-align:center;}.seciico{font-size:26px;margin-bottom:10px;}.secit{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:5px;}.secid{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* PRICING */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:980px;margin:52px auto 0;}
+.plan{background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:22px;padding:28px 24px;display:flex;flex-direction:column;transition:border-color .25s;}
+.plan.hot{background:linear-gradient(145deg,#120f04,#0a0900);border-color:var(--gold);box-shadow:0 0 60px rgba(212,168,67,.08);}
+.pfor{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;}
+.pname{font-family:var(--serif);font-size:24px;color:var(--cream);margin-bottom:4px;}
+.ptag{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5;}
+.ppr{font-size:40px;font-weight:700;color:var(--cream);letter-spacing:-1.5px;line-height:1;}
+.ppr sup{font-size:17px;font-weight:400;color:var(--muted);vertical-align:top;margin-top:7px;}
+.ppr sub{font-size:13px;font-weight:400;color:var(--muted);}
+.pvol{font-size:12px;color:var(--muted);margin:5px 0 18px;}
+.pdiv{height:1px;background:rgba(255,255,255,.06);margin:14px 0;}
+.pf{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);margin-bottom:7px;line-height:1.5;}
+.pf.y{color:rgba(240,235,224,.8);}.pf::before{content:'—';color:rgba(255,255,255,.15);flex-shrink:0;}
+.pf.y::before{content:'✓';color:var(--gold);flex-shrink:0;}
+.pctabtn{width:100%;padding:12px;border-radius:12px;font-family:var(--font);font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .2s;margin-top:auto;}
+.pctabtn.s{background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);margin-top:22px;}
+.pctabtn.s:hover{background:rgba(255,255,255,.1);color:var(--cream);}
+.pctabtn.p{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);margin-top:22px;}
+.pctabtn.p:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,168,67,.25);}
+
+/* CONTACT */
+.fbox2{background:var(--bg);border:1px solid rgba(255,255,255,.07);border-radius:24px;padding:34px;text-align:left;margin-top:44px;}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fld{display:flex;flex-direction:column;gap:6px;}.fld.full{grid-column:1/-1;}
+.fld label{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);}
+.fld input,.fld select{background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:11px 13px;font-family:var(--font);font-size:14px;color:var(--cream);outline:none;transition:border .2s;-webkit-appearance:none;}
+.fld input::placeholder{color:rgba(255,255,255,.2);}
+.fld input:focus,.fld select:focus{border-color:rgba(212,168,67,.4);}
+.fld select option{background:var(--bg2);}
+#fAlert{display:none;padding:10px 14px;border-radius:8px;font-size:13px;margin-top:6px;background:rgba(255,69,58,.1);border:1px solid rgba(255,69,58,.2);color:#ff6b60;}
+.subbtn{width:100%;margin-top:8px;padding:14px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);border:none;border-radius:12px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;transition:all .25s;}
+.subbtn:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(212,168,67,.25);}
+.subbtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.smsg{text-align:center;padding:40px;display:none;}
+.sico{font-size:50px;margin-bottom:14px;}.stit{font-family:var(--serif);font-size:24px;color:var(--cream);margin-bottom:8px;}.ssub{font-size:14px;color:var(--muted);line-height:1.6;}
+
+footer{border-top:1px solid rgba(255,255,255,.04);padding:26px 56px;display:flex;align-items:center;justify-content:space-between;}
+.flogo{font-family:var(--serif);font-size:18px;color:rgba(255,255,255,.4);}.flogo em{font-style:italic;color:var(--gold);}
+.fcopy{font-size:12px;color:var(--muted);}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.18s;}.d3{transition-delay:.26s;}
+.sp{display:inline-block;width:13px;height:13px;border:2px solid rgba(8,7,10,.3);border-top-color:var(--bg);border-radius:50%;animation:spin .7s linear infinite;margin-right:6px;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+@media(max-width:900px){
+  nav{padding:14px 20px;}.nav-links{display:none;}
+  .demo-wrap,.mgrid,.hgrid,.scgrid,.tgrid,.plans,.secgrid{grid-template-columns:1fr;}
+  .sec,.secsec{padding:64px 20px;}
+  .fgrid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Travel <em>AI</em></div>
+  <div class="nav-links">
+    <span class="nl" onclick="go('demo')">Демо</span>
+    <span class="nl" onclick="go('how')">Как работает</span>
+    <span class="nl" onclick="go('scenarios')">Примеры</span>
+    <span class="nl" onclick="go('pricing')">Тарифы</span>
+  </div>
+  <a class="nav-cta" href="roman-login.html">Войти в панель →</a>
+</nav>
+
+<section class="hero">
+  <div class="orb orb1"></div><div class="orb orb2"></div>
+  <div class="badge"><span class="pulse"></span>Уже 12 агентств подключено</div>
+  <h1>ИИ-бот который продаёт<br>туры за вас <em>24/7</em><span class="h1d">пока вы спите</span></h1>
+  <p class="hsub">Клиент выбирает параметры — бот подбирает туры, отвечает на вопросы и передаёт горячую заявку менеджеру. Без участия человека.</p>
+  <div class="pills">
+    <div class="pill">📈 +30% заявок с сайта</div>
+    <div class="pill">⚡ ответ за 2 секунды</div>
+    <div class="pill">🕐 работает 24/7</div>
+    <div class="pill">🛡️ AES-256 шифрование</div>
+  </div>
+  <div class="hbtns">
+    <button class="btn-g" onclick="go('demo')">Попробовать демо →</button>
+    <button class="btn-gh" onclick="go('contact')">Оставить заявку</button>
+  </div>
+  <div class="cnote">Бесплатно · Без регистрации · 5 минут до запуска</div>
+</section>
+
+<!-- DEMO -->
+<div id="demo" style="background:var(--bg2);">
+  <div class="demo-wrap">
+    <div>
+      <div class="se reveal">Живое демо</div>
+      <h2 class="st reveal">Попробуйте <em>прямо сейчас</em></h2>
+      <p class="ss reveal">Выберите параметры и нажмите «Подобрать» — бот найдёт туры как на сайте вашего агентства.</p>
+      <div class="fbox reveal">
+        <div class="ftitle">🔍 Параметры тура</div>
+        <div class="fgrid">
+          <div class="fg"><div class="flb">Страна</div>
+            <select class="fsel" id="fCountry">
+              <option>🇹🇷 Турция</option><option>🇪🇬 Египет</option><option>🇦🇪 ОАЭ</option>
+              <option>🇹🇭 Таиланд</option><option>🇬🇷 Греция</option><option>🇲🇻 Мальдивы</option>
+            </select>
+          </div>
+          <div class="fg"><div class="flb">Город вылета</div>
+            <select class="fsel" id="fCity">
+              <option>Москва</option><option>Санкт-Петербург</option><option>Екатеринбург</option><option>Новосибирск</option>
+            </select>
+          </div>
+          <div class="fg"><div class="flb">Тип отдыха</div>
+            <select class="fsel" id="fType">
+              <option>🏖️ Пляжный</option><option>🏛️ Экскурсионный</option><option>👨‍👩‍👧 Семейный</option><option>💑 Для пары</option>
+            </select>
+          </div>
+          <div class="fg"><div class="flb">Питание</div>
+            <select class="fsel" id="fMeal">
+              <option>🍽️ Всё включено</option><option>☕ Завтрак</option><option>🥗 Полупансион</option>
+            </select>
+          </div>
+          <div class="fg"><div class="flb">Звёзды</div>
+            <select class="fsel" id="fStars">
+              <option>3 звезды</option><option>4 звезды</option><option selected>5 звёзд</option>
+            </select>
+          </div>
+          <div class="fg"><div class="flb">Ночей</div>
+            <select class="fsel" id="fNights">
+              <option>5 ночей</option><option>7 ночей</option><option selected>10 ночей</option><option>14 ночей</option>
+            </select>
+          </div>
+          <div class="fg full">
+            <div class="flb">Бюджет на двоих: <span id="bval">80 000 ₽</span></div>
+            <input type="range" id="fBudget" min="30000" max="300000" step="5000" value="80000"
+              oninput="document.getElementById('bval').textContent=Number(this.value).toLocaleString('ru')+' ₽';updR(this)">
+            <div class="rrow"><span>30 000 ₽</span><span>300 000 ₽</span></div>
+          </div>
+        </div>
+        <button class="sbtn" id="sbtn" onclick="doSearch()">🔍 Подобрать туры</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="cframe">
+        <div class="chdr">
+          <div class="cav">🌴</div>
+          <div><div class="cname">Роман</div><div class="cst">тур-ассистент · онлайн</div></div>
+        </div>
+        <div class="cfeed" id="dFeed"></div>
+        <div class="qbar" id="dQR"></div>
+        <div class="cinp-row">
+          <input class="cinp" id="dInp" type="text" placeholder="или напишите вопрос..."
+            onkeydown="if(event.key==='Enter')dSend()">
+          <button class="csend" onclick="dSend()">
+            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW -->
+<section id="how" class="sec" style="background:var(--bg);">
+  <div class="sec-in">
+    <div class="se reveal">Как работает</div>
+    <h2 class="st reveal">От установки до <em>первого лида</em></h2>
+    <div class="hgrid">
+      <div class="hcard reveal"><div class="hnum">01</div><div class="hico">⚙️</div><div class="htit">Настройте за 10 минут</div><div class="hdsc">Имя бота, цвет, список направлений, стиль общения. Добавьте API-ключи — бот готов.</div></div>
+      <div class="hcard reveal d1"><div class="hnum">02</div><div class="hico">🌐</div><div class="htit">Вставьте на сайт</div><div class="hdsc">Один тег &lt;iframe&gt; — бот появляется на вашем сайте. Tilda, Wix, WordPress, любой HTML.</div></div>
+      <div class="hcard reveal d2"><div class="hnum">03</div><div class="hico">🤖</div><div class="htit">Бот работает сам</div><div class="hdsc">Клиент выбирает параметры, бот подбирает 2–5 туров из базы Sletat, отвечает 24/7.</div></div>
+      <div class="hcard reveal d3"><div class="hnum">04</div><div class="hico">📋</div><div class="htit">Лид с готовой карточкой</div><div class="hdsc">Менеджер получает: страна, бюджет, даты, состав, пожелания. Остаётся только позвонить.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MECHANICS -->
+<section class="sec" style="background:var(--bg2);">
+  <div class="sec-in">
+    <div class="se reveal">Механика</div>
+    <h2 class="st reveal">Как бот <em>выбирает туры</em></h2>
+    <div class="mgrid">
+      <div class="msteps">
+        <div class="ms reveal"><div class="msico">🎯</div><div><div class="mstit">Сбор параметров</div><div class="msdsc">Уточняет страну, вылет, бюджет, даты, тип отдыха, звёзды и питание через фильтры или диалог.</div></div></div>
+        <div class="ms reveal d1"><div class="msico">🔍</div><div><div class="mstit">Поиск по базе Sletat</div><div class="msdsc">На Premium — реальный запрос к API Sletat.ru с вашими B2B-credentials. Реальные цены и наличие.</div></div></div>
+        <div class="ms reveal d2"><div class="msico">🏨</div><div><div class="mstit">Подбор и фильтрация</div><div class="msdsc">ИИ выбирает 2–5 лучших вариантов под бюджет, сортирует по рейтингу и соответствию запросу.</div></div></div>
+        <div class="ms reveal d3"><div class="msico">📤</div><div><div class="mstit">Передача лида</div><div class="msdsc">Клиент нажимает «Хочу этот тур» — менеджер получает готовую карточку в панели.</div></div></div>
+      </div>
+      <div class="reveal d1">
+        <div class="lcard">
+          <div class="ltit">📋 Карточка клиента</div>
+          <div class="lr"><span class="lk">Страна</span><span class="lv">🇹🇷 Турция</span></div>
+          <div class="lr"><span class="lk">Город вылета</span><span class="lv">Москва</span></div>
+          <div class="lr"><span class="lk">Даты</span><span class="lv">15–25 июля</span></div>
+          <div class="lr"><span class="lk">Состав</span><span class="lv">2 взрослых + ребёнок</span></div>
+          <div class="lr"><span class="lk">Бюджет</span><span class="lv gd">до 120 000 ₽</span></div>
+          <div class="lr"><span class="lk">Звёзды / питание</span><span class="lv">5★ · Всё включено</span></div>
+          <div class="lr"><span class="lk">Пожелания</span><span class="lv">Близко к морю, горка для ребёнка</span></div>
+          <div class="lr"><span class="lk">Статус</span><span class="lv gr">● Горячий</span></div>
+          <div class="lbtns"><button class="lb call">📞 Позвонить</button><button class="lb msg">💬 Написать</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENARIOS -->
+<section id="scenarios" class="sec" style="background:var(--bg);">
+  <div class="sec-in">
+    <div class="se reveal">Примеры</div>
+    <h2 class="st reveal">Бот подбирает туры <em>под любой запрос</em></h2>
+    <div class="scgrid">
+      <div class="scc reveal" onclick="quickSc('Турция','Москва','Пляжный','Всё включено','5','7','80000')"><div class="scf">🇹🇷</div><div class="scn">Турция</div><div class="scp">5★ · AI · 7 ночей · 80 000₽ · Москва · Семья · Июль</div><div class="scr">Бот подберёт: <strong>Rixos Premium Belek</strong> от 38 000₽/чел и ещё 2 варианта</div></div>
+      <div class="scc reveal d1" onclick="quickSc('Египет','Санкт-Петербург','Пляжный','Всё включено','4','10','60000')"><div class="scf">🇪🇬</div><div class="scn">Египет</div><div class="scp">4★ · AI · 10 ночей · 60 000₽ · СПб · Пара · Октябрь</div><div class="scr">Бот подберёт: <strong>Sharm Dreams Resort</strong> от 28 000₽/чел</div></div>
+      <div class="scc reveal d2" onclick="quickSc('ОАЭ','Москва','Для пары','Завтрак','5','7','150000')"><div class="scf">🇦🇪</div><div class="scn">ОАЭ</div><div class="scp">5★ · 7 ночей · 150 000₽ · Москва · Пара · Декабрь</div><div class="scr">Бот подберёт: <strong>Atlantis The Palm</strong> от 72 000₽/чел</div></div>
+      <div class="scc reveal" onclick="quickSc('Таиланд','Москва','Пляжный','Всё включено','4','14','120000')"><div class="scf">🇹🇭</div><div class="scn">Таиланд</div><div class="scp">4★ · 14 ночей · 120 000₽ · Москва · Пара · Февраль</div><div class="scr">Бот подберёт: <strong>Kata Palm Resort</strong> от 55 000₽/чел</div></div>
+      <div class="scc reveal d1" onclick="quickSc('Греция','Санкт-Петербург','Экскурсионный','Завтрак','4','10','100000')"><div class="scf">🇬🇷</div><div class="scn">Греция</div><div class="scp">4★ · 10 ночей · 100 000₽ · СПб · Экскурсии · Июнь</div><div class="scr">Бот подберёт: <strong>Santorini Palace</strong> от 48 000₽/чел</div></div>
+      <div class="scc reveal d2" onclick="quickSc('Мальдивы','Москва','Для пары','Всё включено','5','7','250000')"><div class="scf">🇲🇻</div><div class="scn">Мальдивы</div><div class="scp">5★ · 7 ночей · 250 000₽ · Москва · Медовый месяц</div><div class="scr">Бот подберёт: <strong>Velassaru Maldives</strong> от 120 000₽/чел</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust" class="sec" style="background:var(--bg2);">
+  <div class="sec-in">
+    <div class="se reveal">Отзывы</div>
+    <h2 class="st reveal">Что говорят те, <em>кто уже подключил</em></h2>
+    <div class="tgrid">
+      <div class="tc reveal"><div class="tst">★★★★★</div><div class="tq">Поставили бота в пятницу вечером — в субботу утром уже 3 заявки. Раньше выходные были мёртвыми.</div><div class="tres">📈 Конверсия с сайта: с 2% до 14%</div><div class="tau"><div class="tav">🌞</div><div><div class="tn">Алина Романова</div><div class="tr">Директор, ТурСолнышко · Москва</div></div></div></div>
+      <div class="tc reveal d1"><div class="tst">★★★★★</div><div class="tq">Менеджеры перестали тратить время на первичный опрос. Бот собирает всё — они звонят с готовым предложением.</div><div class="tres">⏱️ Экономия 2 часа/день на менеджера</div><div class="tau"><div class="tav">🏔</div><div><div class="tn">Сергей Волков</div><div class="tr">Владелец, AlpsTour · Екатеринбург</div></div></div></div>
+      <div class="tc reveal d2"><div class="tst">★★★★★</div><div class="tq">Клиенты пишут боту в 2 ночи — раньше мы эти заявки теряли. Теперь утром менеджер видит готовую карточку.</div><div class="tres">🌙 +40% заявок в нерабочее время</div><div class="tau"><div class="tav">🌴</div><div><div class="tn">Марина Козлова</div><div class="tr">CEO, BaliDream · Санкт-Петербург</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<div class="secsec">
+  <div class="secgrid">
+    <div class="seci reveal"><div class="seciico">🔐</div><div class="secit">AES-256 шифрование</div><div class="secid">Все ключи и данные клиентов хранятся в зашифрованном виде</div></div>
+    <div class="seci reveal d1"><div class="seciico">🏠</div><div class="secit">Изолированные данные</div><div class="secid">Данные каждого агентства полностью изолированы</div></div>
+    <div class="seci reveal d2"><div class="seciico">⚡</div><div class="secit">99.9% uptime</div><div class="secid">Автоматический перезапуск при сбоях</div></div>
+    <div class="seci reveal d3"><div class="seciico">🇷🇺</div><div class="secit">Поддержка на русском</div><div class="secid">Помогаем с настройкой в течение 24 часов</div></div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section id="pricing" class="sec" style="background:var(--bg);">
+  <div class="sec-in" style="text-align:center;max-width:1140px;">
+    <div class="se reveal">Тарифы</div>
+    <h2 class="st reveal">Понятные цены, <em>без сюрпризов</em></h2>
+    <div class="plans">
+      <div class="plan reveal">
+        <div class="pfor">Для старта</div><div class="pname">Basic</div>
+        <div class="ptag">Форма подбора без ИИ-диалога. Собирает заявки и передаёт менеджеру.</div>
+        <div class="ppr"><sup>₽</sup>1 900<sub>/мес</sub></div><div class="pvol">до 200 лидов в месяц</div>
+        <div class="pdiv"></div>
+        <div class="pf y">Форма параметров на сайте</div><div class="pf y">Карточка клиента менеджеру</div>
+        <div class="pf y">Панель управления</div><div class="pf y">Кастомизация бота</div>
+        <div class="pf">ИИ-диалог с клиентом</div><div class="pf">Подбор отелей</div><div class="pf">Реальные цены Sletat</div>
+        <button class="pctabtn s" onclick="scrollContact('Basic')">Начать →</button>
+      </div>
+      <div class="plan hot reveal d1">
+        <div class="pfor">Популярный выбор</div><div class="pname">Pro</div>
+        <div class="ptag">ИИ ведёт диалог, подбирает туры и формирует лид. Работает 24/7 вместо менеджера.</div>
+        <div class="ppr"><sup>₽</sup>5 900<sub>/мес</sub></div><div class="pvol">до 500 диалогов в месяц</div>
+        <div class="pdiv"></div>
+        <div class="pf y">Всё из Basic</div><div class="pf y">ИИ-диалог с клиентом</div>
+        <div class="pf y">2–3 отеля с описанием</div><div class="pf y">6 стилей общения</div>
+        <div class="pf y">Ориентировочные цены</div>
+        <div class="pf">Точные цены из Sletat</div><div class="pf">B2B-ключ Sletat</div>
+        <button class="pctabtn p" onclick="scrollContact('Pro')">Подключить →</button>
+      </div>
+      <div class="plan reveal d2">
+        <div class="pfor">Для крупных агентств</div><div class="pname">Premium</div>
+        <div class="ptag">Реальные туры из Sletat с точными ценами. Полное конкурентное преимущество.</div>
+        <div class="ppr"><sup>₽</sup>12 900<sub>/мес</sub></div><div class="pvol">диалоги без ограничений</div>
+        <div class="pdiv"></div>
+        <div class="pf y">Всё из Pro</div><div class="pf y">3–5 реальных туров</div>
+        <div class="pf y">Точные цены и даты</div><div class="pf y">Ваш B2B-ключ Sletat</div>
+        <div class="pf y">Безлимит диалогов</div><div class="pf y">Приоритетная поддержка</div>
+        <button class="pctabtn s" onclick="scrollContact('Premium')">Начать →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec" style="background:var(--bg2);">
+  <div style="max-width:600px;margin:0 auto;text-align:center;">
+    <div class="se reveal">Заявка</div>
+    <h2 class="st reveal">Подключим <em>за 24 часа</em></h2>
+    <div class="fbox2 reveal">
+      <div id="fInner">
+        <div class="fgrid">
+          <div class="fld"><label>Агентство</label><input type="text" id="fName" placeholder="Название агентства"></div>
+          <div class="fld"><label>Ваше имя</label><input type="text" id="fContact" placeholder="Имя и фамилия"></div>
+          <div class="fld"><label>Телефон / Telegram</label><input type="text" id="fPhone" placeholder="+7 999 ..."></div>
+          <div class="fld"><label>Тариф</label><select id="fPlan"><option value="Basic">Basic — 1 900 ₽/мес</option><option value="Pro" selected>Pro — 5 900 ₽/мес</option><option value="Premium">Premium — 12 900 ₽/мес</option></select></div>
+          <div class="fld"><label>Сайт агентства</label><input type="text" id="fSite" placeholder="https://..."></div>
+          <div class="fld"><label>Город</label><input type="text" id="fCityF" placeholder="Москва"></div>
+          <div class="fld"><label>Размер команды</label><select id="fTeam"><option>1–3 менеджера</option><option>4–10 менеджеров</option><option>10+ менеджеров</option></select></div>
+          <div class="fld"><label>Откуда узнали</label><select id="fSource"><option>Поиск Google/Яндекс</option><option>Рекомендация</option><option>Соцсети</option><option>Другое</option></select></div>
+        </div>
+        <div id="fAlert"></div>
+        <button class="subbtn" id="fBtn" onclick="submitLead()">Отправить заявку →</button>
+      </div>
+      <div class="smsg" id="fSuccess"><div class="sico">🌴</div><div class="stit">Заявка принята!</div><div class="ssub">Свяжемся в течение 24 часов и вышлем ключ для входа в панель.</div></div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="flogo">Travel <em>AI</em></div><div class="fcopy">© 2026 Travel AI · Все права защищены</div></footer>
+
+<script>
+const API='https://roman-backend-production.up.railway.app';
+function go(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+function scrollContact(plan){document.getElementById('fPlan').value=plan;go('contact');}
+function updR(el){const p=(el.value-el.min)/(el.max-el.min)*100;el.style.background=`linear-gradient(to right,var(--gold) 0%,var(--gold) ${p}%,rgba(255,255,255,.1) ${p}%,rgba(255,255,255,.1) 100%)`;}
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+const D={hist:[],busy:false};
+function fmt(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');}
+function addMsg(text,isUser){
+  const feed=document.getElementById('dFeed');
+  const row=document.createElement('div');row.className='mr'+(isUser?' u':'');
+  const av=isUser?'<div class="mav u">👤</div>':'<div class="mav b">🌴</div>';
+  const bub=`<div class="bub">${fmt(text)}</div>`;
+  row.innerHTML=isUser?bub+av:av+bub;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;
+}
+function addTyping(){const feed=document.getElementById('dFeed');const r=document.createElement('div');r.className='mr';r.id='typing';r.innerHTML='<div class="mav b">🌴</div><div class="tbub"><div class="dots"><span></span><span></span><span></span></div></div>';feed.appendChild(r);feed.scrollTop=feed.scrollHeight;}
+function rmTyping(){document.getElementById('typing')?.remove();}
+function setQR(btns){const bar=document.getElementById('dQR');bar.innerHTML='';btns.forEach(b=>{const el=document.createElement('button');el.className='qbtn';el.textContent=b.l;el.onclick=b.f;bar.appendChild(el);});}
+
+function quickSc(country,city,type,meal,stars,nights,budget){
+  const cmap={'Турция':'🇹🇷 Турция','Египет':'🇪🇬 Египет','ОАЭ':'🇦🇪 ОАЭ','Таиланд':'🇹🇭 Таиланд','Греция':'🇬🇷 Греция','Мальдивы':'🇲🇻 Мальдивы'};
+  const sel=document.getElementById('fCountry');
+  for(let i=0;i<sel.options.length;i++){if(sel.options[i].text.includes(country)){sel.selectedIndex=i;break;}}
+  document.getElementById('fCity').value=city;
+  document.getElementById('fBudget').value=budget;
+  document.getElementById('bval').textContent=Number(budget).toLocaleString('ru')+' ₽';
+  updR(document.getElementById('fBudget'));
+  go('demo');
+  setTimeout(doSearch,300);
+}
+
+async function doSearch(){
+  const country=document.getElementById('fCountry').value.replace(/^[^\s]+ /,'');
+  const city=document.getElementById('fCity').value;
+  const type=document.getElementById('fType').value.replace(/^[^\s]+ /,'');
+  const meal=document.getElementById('fMeal').value.replace(/^[^\s]+ /,'');
+  const stars=document.getElementById('fStars').value.match(/\d/)[0];
+  const nights=document.getElementById('fNights').value;
+  const budget=document.getElementById('fBudget').value;
+  const text=`Ищу тур: ${country}, вылет из ${city}, ${type} отдых, ${meal}, ${stars} звезды, ${nights}, бюджет ${Number(budget).toLocaleString('ru')} рублей на двоих`;
+  const btn=document.getElementById('sbtn');
+  btn.disabled=true;btn.innerHTML='<span class="sp"></span>Ищем...';
+  document.getElementById('dQR').innerHTML='';
+  addMsg(text,true);D.hist.push({role:'user',content:text});
+  await callDemo();
+  btn.disabled=false;btn.textContent='🔍 Подобрать туры';
+}
+
+async function dSend(){
+  const inp=document.getElementById('dInp');const t=inp.value.trim();
+  if(!t||D.busy)return;inp.value='';
+  addMsg(t,true);D.hist.push({role:'user',content:t});
+  document.getElementById('dQR').innerHTML='';
+  await callDemo();
+}
+
+async function callDemo(){
+  if(D.busy)return;D.busy=true;addTyping();
+  try{
+    const res=await fetch(`${API}/api/demo/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:D.hist})});
+    const data=await res.json();rmTyping();
+    if(data.reply){
+      addMsg(data.reply,false);D.hist.push({role:'assistant',content:data.reply});
+      if(data.action==='contact'){setTimeout(()=>go('contact'),800);}
+      else{setQR([
+        {l:'📋 Карточку клиента менеджеру',f:()=>dQuick('Сформируй готовую карточку клиента для менеджера')},
+        {l:'📅 Ближайшие даты вылета',f:()=>dQuick('Какие ближайшие даты вылета?')},
+        {l:'💰 Показать дешевле',f:()=>dQuick('Покажи варианты дешевле')},
+        {l:'🏨 Подробнее об отеле',f:()=>dQuick('Расскажи подробнее о первом отеле')},
+        {l:'✈️ Что входит в тур?',f:()=>dQuick('Что входит в стоимость тура?')},
+        {l:'📲 Подключить на мой сайт',f:()=>go('contact')},
+      ]);}
+    }else{addMsg('Что-то пошло не так. Попробуйте ещё раз 🌴',false);}
+  }catch(e){rmTyping();addMsg('Демо-сервер недоступен. Оставьте заявку — покажем вживую! 🌴',false);setQR([{l:'Оставить заявку',f:()=>go('contact')}]);}
+  D.busy=false;
+}
+
+function dQuick(text){document.getElementById('dQR').innerHTML='';addMsg(text,true);D.hist.push({role:'user',content:text});callDemo();}
+
+async function submitLead(){
+  const name=document.getElementById('fName').value.trim();
+  const phone=document.getElementById('fPhone').value.trim();
+  if(!name||!phone){const al=document.getElementById('fAlert');al.textContent='Заполните название агентства и телефон';al.style.display='block';return;}
+  document.getElementById('fAlert').style.display='none';
+  const btn=document.getElementById('fBtn');btn.disabled=true;btn.innerHTML='<span class="sp"></span>Отправляем...';
+  try{await fetch(`${API}/api/demo/lead`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,phone,contact:document.getElementById('fContact').value,plan:document.getElementById('fPlan').value,site:document.getElementById('fSite').value,city:document.getElementById('fCityF').value,team:document.getElementById('fTeam').value,source:document.getElementById('fSource').value})});}catch(e){}
+  document.getElementById('fInner').style.display='none';document.getElementById('fSuccess').style.display='block';
+}
+
+(function(){
+  addMsg('Привет! Я Роман 🌴\nВыберите параметры тура слева и нажмите «Подобрать» — или напишите мне напрямую.',false);
+  setQR([
+    {l:'🇹🇷 Турция 5★ 80 000₽',f:()=>doSearch()},
+    {l:'🇪🇬 Египет 4★ 60 000₽',f:()=>{const s=document.getElementById('fCountry');for(let i=0;i<s.options.length;i++){if(s.options[i].text.includes('Египет')){s.selectedIndex=i;break;}}document.getElementById('fBudget').value=60000;document.getElementById('bval').textContent='60 000 ₽';updR(document.getElementById('fBudget'));doSearch();}},
+    {l:'✨ Что такое Travel AI?',f:()=>dQuick('Расскажи о сервисе Travel AI')},
+  ]);
+})();
+</script>
+</body>
+</html>
