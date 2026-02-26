@@ -302,7 +302,8 @@ async function loadConfig() {
     if (res.status === 401) { logout(); return; }
     agencyData = await res.json();
     document.getElementById('sbName').textContent = agencyData.name || 'Агентство';
-    document.getElementById('sbPlan').textContent = (agencyData.plan||'Pro').charAt(0).toUpperCase()+(agencyData.plan||'pro').slice(1);
+    const planLabels={'basic':'Basic','hot':'Горящие туры','pro':'Pro','premium':'Premium'};
+    document.getElementById('sbPlan').textContent = planLabels[(agencyData.plan||'pro').toLowerCase()] || agencyData.plan || 'Pro';
     document.getElementById('sBotName').value = agencyData.bot_name || '';
     document.getElementById('sBrandColor').value = agencyData.brand_color || '#2563eb';
     document.getElementById('sTone').value = agencyData.tone || 'friendly';
