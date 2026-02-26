@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="eQLYZuNE5GdeqmgsmkxX_kFKtL-uAEseBGpiXSUV0xs">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3385XBMVEW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3385XBMVEW');
+</script>
+<title>Travel AI — ИИ-ассистент для турагентств</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#1d4ed8;--p2:#3b82f6;--pt:rgba(29,78,216,.09);
+  --dark:#0f172a;--dark2:#1e293b;
+  --g:#f8fafc;--g2:#f1f5f9;--g3:#e2e8f0;--g4:#cbd5e1;
+  --tx:#0f172a;--tx2:#475569;--tx3:#94a3b8;
+  --wh:#fff;--green:#16a34a;--greent:rgba(22,163,74,.1);
+  --red:#dc2626;--amber:#f59e0b;
+  --rd:14px;--font:'Inter',-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--wh);color:var(--tx);-webkit-font-smoothing:antialiased;}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--g3);}
+.nav-in{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 32px;}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;}
+.logo-mark{width:32px;height:32px;background:var(--p);border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px;letter-spacing:-.5px;}
+.logo-text{font-size:17px;font-weight:800;color:var(--tx);letter-spacing:-.4px;}
+.logo-text em{font-style:normal;color:var(--p);}
+.nav-links{display:flex;gap:2px;}
+.nl{font-size:13px;color:var(--tx2);padding:6px 13px;border-radius:8px;cursor:pointer;transition:all .15s;font-weight:500;text-decoration:none;}
+.nl:hover{background:var(--g2);color:var(--tx);}
+.nav-cta{background:var(--p);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .2s;text-decoration:none;}
+.nav-cta:hover{background:#1e40af;transform:translateY(-1px);}
+
+/* ─── BUTTONS ─── */
+.btn{display:inline-flex;align-items:center;gap:7px;border:none;border-radius:11px;padding:13px 28px;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;text-decoration:none;}
+.btn-primary{background:var(--p);color:#fff;}
+.btn-primary:hover{background:#1e40af;transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,78,216,.28);}
+.btn-outline{background:transparent;color:var(--tx);border:1.5px solid var(--g4);}
+.btn-outline:hover{border-color:var(--p);color:var(--p);}
+.btn-white{background:#fff;color:var(--p);}
+.btn-white:hover{background:var(--g);transform:translateY(-1px);}
+.btn-sm{padding:9px 18px;font-size:13px;border-radius:9px;}
+
+/* ─── SECTIONS ─── */
+.sec{padding:88px 32px;}
+.sec-in{max-width:1160px;margin:0 auto;}
+.sec-label{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--p);margin-bottom:10px;}
+h2{font-size:clamp(26px,3vw,40px);font-weight:800;letter-spacing:-1.2px;line-height:1.12;color:var(--tx);margin-bottom:8px;}
+h2 em{font-style:normal;color:var(--p);}
+.sec-sub{font-size:15px;color:var(--tx2);line-height:1.65;max-width:520px;}
+.divider{height:1px;background:var(--g3);max-width:1160px;margin:0 auto;}
+
+/* ─── HERO ─── */
+.hero{padding:118px 32px 80px;background:linear-gradient(160deg,#eff6ff 0%,#fff 55%);}
+.hero-in{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 480px;gap:64px;align-items:center;}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;background:var(--pt);border:1px solid rgba(29,78,216,.18);color:var(--p);border-radius:20px;padding:5px 13px;font-size:12px;font-weight:600;margin-bottom:20px;}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--p);animation:bl 2s infinite;}
+@keyframes bl{0%,100%{opacity:1;}50%{opacity:.2;}}
+h1{font-size:clamp(36px,4.5vw,56px);font-weight:800;line-height:1.06;letter-spacing:-2px;color:var(--tx);margin-bottom:16px;}
+h1 em{font-style:normal;color:var(--p);}
+.hero-desc{font-size:16px;color:var(--tx2);line-height:1.65;margin-bottom:28px;max-width:440px;}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+.hero-note{font-size:12px;color:var(--tx3);}
+.hero-note span{color:var(--p);font-weight:600;}
+
+/* HERO STATS */
+.hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.hs{background:#fff;border:1.5px solid var(--g3);border-radius:var(--rd);padding:18px 20px;}
+.hs-n{font-size:30px;font-weight:800;color:var(--tx);letter-spacing:-1px;line-height:1;}
+.hs-n em{font-style:normal;color:var(--p);}
+.hs-l{font-size:12px;color:var(--tx3);margin-top:4px;font-weight:500;}
+
+/* ─── DARK STATS BAR ─── */
+.stats-bar{background:var(--dark);padding:28px 32px;}
+.stats-bar-in{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);border:1px solid rgba(255,255,255,.07);border-radius:var(--rd);overflow:hidden;}
+.sb-item{padding:24px;text-align:center;border-right:1px solid rgba(255,255,255,.07);}
+.sb-item:last-child{border-right:none;}
+.sb-n{font-size:28px;font-weight:800;color:#fff;letter-spacing:-.8px;line-height:1;}
+.sb-n em{font-style:normal;color:var(--p2);}
+.sb-l{font-size:12px;color:rgba(255,255,255,.35);margin-top:5px;}
+
+/* ─── BEFORE/AFTER ─── */
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:40px;}
+.ba-card{border-radius:16px;padding:28px;}
+.ba-card.before{background:var(--g2);border:1.5px solid var(--g3);}
+.ba-card.after{background:var(--p);color:#fff;}
+.ba-label{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;opacity:.45;margin-bottom:18px;}
+.ba-item{display:flex;align-items:flex-start;gap:9px;margin-bottom:11px;font-size:14px;line-height:1.5;}
+.ba-x{color:#ef4444;font-weight:700;flex-shrink:0;}
+.ba-check{color:#86efac;font-weight:700;flex-shrink:0;}
+.ba-card.before .ba-item{color:var(--tx2);}
+.ba-card.after .ba-item{color:rgba(255,255,255,.85);}
+.ba-result{margin-top:20px;padding-top:16px;font-size:22px;font-weight:800;letter-spacing:-.5px;}
+.ba-card.before .ba-result{border-top:1px solid var(--g3);color:var(--tx);}
+.ba-card.after .ba-result{border-top:1px solid rgba(255,255,255,.18);color:#fff;}
+
+/* ─── FLOW ─── */
+.flow-row{display:flex;align-items:flex-start;gap:0;margin-top:44px;overflow-x:auto;}
+.fl-step{flex:1;min-width:110px;text-align:center;position:relative;padding:0 6px;}
+.fl-step::after{content:'→';position:absolute;top:17px;right:-8px;font-size:16px;color:var(--g4);line-height:1;}
+.fl-step:last-child::after{display:none;}
+.fl-ico{width:48px;height:48px;border-radius:14px;background:var(--pt);border:1.5px solid rgba(29,78,216,.15);display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 10px;}
+.fl-title{font-size:12px;font-weight:700;color:var(--tx);margin-bottom:3px;}
+.fl-sub{font-size:11px;color:var(--tx3);line-height:1.4;}
+
+/* ─── DEMO ─── */
+.demo-grid{display:grid;grid-template-columns:1fr 380px;gap:44px;align-items:start;margin-top:40px;}
+
+.filter-card{background:#fff;border:1.5px solid var(--g3);border-radius:16px;padding:22px;box-shadow:0 1px 6px rgba(0,0,0,.05);}
+.fc-title{font-size:14px;font-weight:700;color:var(--tx);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--g3);}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.fl2{display:flex;flex-direction:column;gap:4px;}
+.fl2.full{grid-column:1/-1;}
+.fl2 label{font-size:10px;font-weight:700;color:var(--tx3);letter-spacing:.5px;text-transform:uppercase;}
+.fl2 select{background:var(--g);border:1.5px solid var(--g3);border-radius:9px;padding:9px 11px;font-family:var(--font);font-size:13px;color:var(--tx);outline:none;-webkit-appearance:none;transition:border .15s;cursor:pointer;}
+.fl2 select:focus{border-color:var(--p);}
+.budget-label{display:flex;justify-content:space-between;align-items:center;}
+.budget-val{font-size:13px;font-weight:700;color:var(--p);}
+input[type=range]{width:100%;height:4px;border-radius:10px;background:linear-gradient(to right,var(--p) 0%,var(--p) 50%,var(--g3) 50%,var(--g3) 100%);outline:none;-webkit-appearance:none;cursor:pointer;margin-top:7px;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--p);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);cursor:pointer;}
+.range-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--tx3);margin-top:4px;}
+.search-btn{width:100%;padding:12px;background:var(--p);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:14px;letter-spacing:-.1px;}
+.search-btn:hover{background:#1e40af;}
+.search-btn:disabled{opacity:.5;cursor:not-allowed;}
+.demo-note{font-size:11px;color:var(--tx3);text-align:center;margin-top:8px;line-height:1.5;}
+
+/* CHAT */
+.chat-wrap{background:#fff;border:1.5px solid var(--g3);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.07);position:sticky;top:78px;}
+.chat-hdr{padding:13px 16px;display:flex;align-items:center;gap:10px;background:var(--dark);border-bottom:1px solid rgba(255,255,255,.06);}
+.c-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--p2));display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0;position:relative;}
+.c-av::after{content:'';width:8px;height:8px;border-radius:50%;background:#22c55e;border:2px solid var(--dark);position:absolute;bottom:0;right:0;}
+.c-name{font-size:13px;font-weight:700;color:#fff;}
+.c-status{font-size:11px;color:rgba(255,255,255,.35);margin-top:1px;}
+.chat-feed{height:380px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#f9fafb;scrollbar-width:thin;scrollbar-color:var(--g3) transparent;}
+.chat-feed::-webkit-scrollbar{width:3px;}.chat-feed::-webkit-scrollbar-thumb{background:var(--g3);}
+.msg-row{display:flex;gap:7px;animation:mi .2s ease;}.msg-row.user{flex-direction:row-reverse;}
+@keyframes mi{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:none;}}
+.msg-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;align-self:flex-end;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+.msg-av.bot{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;}
+.msg-av.user{background:var(--dark2);color:rgba(255,255,255,.7);}
+.bubble{max-width:82%;padding:9px 13px;border-radius:16px;font-size:13px;line-height:1.55;font-family:var(--font);}
+.msg-row:not(.user) .bubble{background:#fff;color:var(--tx);border:1px solid var(--g3);border-top-left-radius:3px;}
+.msg-row.user .bubble{background:var(--p);color:#fff;border-top-right-radius:3px;}
+
+/* TOUR CARD IN CHAT */
+.tour-card{background:#fff;border:1.5px solid var(--g3);border-radius:12px;overflow:hidden;max-width:250px;transition:border-color .18s;cursor:default;}
+.tour-card:hover{border-color:var(--p);}
+.tour-thumb{height:72px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:rgba(255,255,255,.65);letter-spacing:.3px;padding:6px;}
+.tour-body{padding:9px 11px 10px;}
+.tour-name{font-size:12px;font-weight:700;color:var(--tx);margin-bottom:2px;line-height:1.3;}
+.tour-loc{font-size:10px;color:var(--tx3);margin-bottom:6px;}
+.tour-desc{font-size:10px;color:var(--tx2);margin-bottom:7px;line-height:1.4;}
+.tour-footer{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+.tour-price{font-size:14px;font-weight:800;color:var(--p);line-height:1;}
+.tour-price small{font-size:10px;font-weight:400;color:var(--tx3);display:block;}
+.tour-stars{font-size:10px;color:var(--amber);}
+.tour-btn{width:100%;padding:6px;background:var(--p);color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:700;font-family:var(--font);cursor:pointer;transition:background .15s;}
+.tour-btn:hover{background:#1e40af;}
+
+.typing-bub{background:#fff;border:1px solid var(--g3);border-radius:14px 14px 14px 3px;padding:10px 14px;}
+.dots{display:flex;gap:4px;align-items:center;}
+.dots span{width:5px;height:5px;border-radius:50%;background:var(--g3);animation:dk 1.2s infinite;}
+.dots span:nth-child(2){animation-delay:.2s;}.dots span:nth-child(3){animation-delay:.4s;}
+@keyframes dk{0%,60%,100%{opacity:.4;transform:none;}30%{opacity:1;transform:translateY(-4px);}}
+
+.qbar{border-top:1px solid var(--g3);padding:8px 12px;display:flex;flex-wrap:wrap;gap:5px;min-height:42px;background:#fff;}
+.qbtn{background:var(--g);border:1.5px solid var(--g3);color:var(--p);border-radius:8px;padding:5px 11px;font-size:11px;font-family:var(--font);font-weight:600;cursor:pointer;transition:all .15s;}
+.qbtn:hover{background:var(--pt);border-color:var(--p);}
+.inp-row{border-top:1px solid var(--g3);padding:10px 12px;display:flex;gap:7px;align-items:center;background:#fff;}
+.chat-inp{flex:1;background:var(--g);border:1.5px solid var(--g3);border-radius:9px;padding:8px 12px;font-size:13px;font-family:var(--font);color:var(--tx);outline:none;transition:border .15s;}
+.chat-inp:focus{border-color:var(--p);background:#fff;}
+.chat-inp::placeholder{color:var(--tx3);}
+.send-btn{width:32px;height:32px;border-radius:8px;background:var(--p);border:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.send-btn:hover{background:#1e40af;}
+.send-btn svg{width:14px;height:14px;fill:#fff;}
+
+/* ─── WHO ─── */
+.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px;}
+.who-card{background:#fff;border:1.5px solid var(--g3);border-radius:16px;padding:26px;transition:all .2s;}
+.who-card:hover{border-color:var(--p);box-shadow:0 4px 16px rgba(29,78,216,.08);}
+.wc-ico{width:44px;height:44px;border-radius:12px;background:var(--pt);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;}
+.wc-title{font-size:15px;font-weight:700;color:var(--tx);margin-bottom:6px;}
+.wc-desc{font-size:13px;color:var(--tx2);line-height:1.6;}
+.wc-tag{display:inline-block;margin-top:12px;background:var(--pt);color:var(--p);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;}
+
+/* ─── PILOT ─── */
+.pilot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px;}
+.pilot-card{background:#fff;border:2px solid var(--p);border-radius:16px;padding:24px;}
+.pc-n{font-size:11px;font-weight:700;color:var(--p);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;}
+.pc-title{font-size:15px;font-weight:700;color:var(--tx);margin-bottom:6px;}
+.pc-desc{font-size:13px;color:var(--tx2);line-height:1.6;}
+.pilot-banner{margin-top:22px;background:var(--p);border-radius:14px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.pb-title{font-size:16px;font-weight:700;color:#fff;}
+.pb-sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:3px;}
+
+/* ─── CASES ─── */
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px;}
+.case-card{background:#fff;border:1.5px solid var(--g3);border-radius:16px;padding:24px;display:flex;flex-direction:column;}
+.case-agency{font-size:11px;font-weight:700;color:var(--tx3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px;}
+.case-ba{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.case-row{font-size:13px;color:var(--tx2);padding:9px 11px;border-radius:9px;line-height:1.5;}
+.case-row.before{background:var(--g2);border:1px solid var(--g3);}
+.case-row.before::before{content:'До: ';font-weight:700;color:var(--red);}
+.case-row.after{background:#f0fdf4;border:1px solid #bbf7d0;}
+.case-row.after::before{content:'После: ';font-weight:700;color:var(--green);}
+.case-result{font-size:22px;font-weight:800;color:var(--p);letter-spacing:-.5px;margin-top:auto;}
+.case-sub{font-size:12px;color:var(--tx3);margin-top:2px;}
+
+/* ─── HONEST ─── */
+.honest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px;}
+.hc{background:var(--g);border:1.5px solid var(--g3);border-radius:16px;padding:24px;}
+.hc-title{font-size:15px;font-weight:700;color:var(--tx);margin-bottom:6px;}
+.hc-desc{font-size:13px;color:var(--tx2);line-height:1.6;}
+
+/* ─── FAQ ─── */
+.faq-list{display:flex;flex-direction:column;gap:8px;margin-top:40px;max-width:680px;}
+details{background:#fff;border:1.5px solid var(--g3);border-radius:12px;padding:16px 20px;cursor:pointer;transition:border-color .15s;}
+details:hover,details[open]{border-color:var(--p);}
+summary{font-size:14px;font-weight:700;color:var(--tx);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+summary::-webkit-details-marker{display:none;}
+.faq-plus{color:var(--p);font-size:20px;font-weight:300;flex-shrink:0;transition:transform .2s;line-height:1;}
+details[open] .faq-plus{transform:rotate(45deg);}
+.faq-body{margin-top:10px;font-size:13px;color:var(--tx2);line-height:1.65;}
+
+/* ─── PRICING ─── */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px;}
+.plan{background:#fff;border:1.5px solid var(--g3);border-radius:16px;padding:26px;display:flex;flex-direction:column;}
+.plan.featured{border-color:var(--p);box-shadow:0 0 0 3px rgba(29,78,216,.08);}
+.plan-badge{display:inline-block;background:var(--p);color:#fff;font-size:10px;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:12px;letter-spacing:.3px;text-transform:uppercase;}
+.plan-name{font-size:22px;font-weight:800;color:var(--tx);letter-spacing:-.6px;margin-bottom:3px;}
+.plan-for{font-size:12px;color:var(--tx3);margin-bottom:16px;}
+.plan-price{font-size:36px;font-weight:800;color:var(--tx);letter-spacing:-1.5px;line-height:1;}
+.plan-price sup{font-size:15px;font-weight:500;color:var(--tx3);vertical-align:top;margin-top:6px;}
+.plan-price sub{font-size:13px;font-weight:400;color:var(--tx3);}
+.plan-vol{font-size:12px;color:var(--tx3);margin:5px 0 18px;}
+.plan-div{height:1px;background:var(--g3);margin:0 0 16px;}
+.pf{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--tx2);margin-bottom:8px;line-height:1.5;}
+.pf.on{color:var(--tx);}
+.pf::before{content:'—';color:var(--tx3);flex-shrink:0;font-size:12px;}
+.pf.on::before{content:'✓';color:var(--p);font-weight:800;flex-shrink:0;}
+.plan-cta{margin-top:auto;padding-top:18px;}
+.plan-btn{width:100%;padding:11px;border-radius:9px;font-family:var(--font);font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s;letter-spacing:-.1px;}
+.plan-btn.sec{background:var(--g2);color:var(--tx2);border:1.5px solid var(--g3);}
+.plan-btn.sec:hover{background:var(--g3);color:var(--tx);}
+.plan-btn.pri{background:var(--p);color:#fff;}
+.plan-btn.pri:hover{background:#1e40af;transform:translateY(-1px);}
+
+/* ─── FINAL CTA ─── */
+.final-cta{background:var(--p);padding:80px 32px;text-align:center;}
+.fc-in{max-width:520px;margin:0 auto;}
+.fc-label{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:12px;}
+.fc-h{font-size:clamp(26px,4vw,42px);font-weight:800;color:#fff;letter-spacing:-1px;line-height:1.12;margin-bottom:12px;}
+.fc-sub{font-size:15px;color:rgba(255,255,255,.65);margin-bottom:28px;line-height:1.6;}
+.fc-note{font-size:12px;color:rgba(255,255,255,.35);margin-top:12px;}
+
+/* ─── CONTACT ─── */
+.form-card{background:#fff;border:1.5px solid var(--g3);border-radius:16px;padding:30px;margin-top:36px;}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fld{display:flex;flex-direction:column;gap:4px;}.fld.full{grid-column:1/-1;}
+.fld label{font-size:10px;font-weight:700;color:var(--tx3);letter-spacing:.5px;text-transform:uppercase;}
+.fld input,.fld select{background:var(--g);border:1.5px solid var(--g3);border-radius:9px;padding:10px 12px;font-family:var(--font);font-size:14px;color:var(--tx);outline:none;transition:border .15s;-webkit-appearance:none;}
+.fld input::placeholder{color:var(--tx3);}
+.fld input:focus,.fld select:focus{border-color:var(--p);background:#fff;}
+.fld select option{background:#fff;}
+#fAlert{display:none;padding:10px 14px;border-radius:8px;font-size:13px;margin-top:6px;background:#fef2f2;border:1px solid #fecaca;color:#dc2626;}
+.sub-btn{width:100%;margin-top:12px;padding:13px;background:var(--p);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:-.1px;}
+.sub-btn:hover{background:#1e40af;transform:translateY(-1px);}
+.sub-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.form-promise{margin-top:10px;font-size:12px;color:var(--tx3);text-align:center;}
+.success-msg{text-align:center;padding:40px;display:none;}
+.success-ico{font-size:40px;margin-bottom:12px;}
+.success-title{font-size:20px;font-weight:800;color:var(--tx);margin-bottom:6px;}
+.success-sub{font-size:14px;color:var(--tx2);line-height:1.65;}
+
+/* ─── FOOTER ─── */
+footer{background:var(--dark);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;}
+.f-logo{display:flex;align-items:center;gap:8px;}
+.f-mark{width:28px;height:28px;background:var(--p);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;}
+.f-txt{font-size:15px;font-weight:800;color:rgba(255,255,255,.45);letter-spacing:-.3px;}
+.f-txt em{font-style:normal;color:var(--p2);}
+.f-copy{font-size:12px;color:rgba(255,255,255,.2);}
+
+/* ─── UTILS ─── */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s;}
+.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}
+.sp{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;margin-right:6px;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+@media(max-width:960px){
+  .nav-links{display:none;}.nav-in{padding:0 16px;}
+  .hero-in{grid-template-columns:1fr;gap:40px;}.hero{padding:90px 20px 56px;}
+  .hero-stats{grid-template-columns:repeat(4,1fr);}
+  .stats-bar-in{grid-template-columns:repeat(2,1fr);}
+  .sec{padding:64px 20px;}
+  .ba-grid,.demo-grid,.who-grid,.pilot-grid,.cases-grid,.honest-grid,.plans,.fgrid{grid-template-columns:1fr;}
+  .demo-grid{gap:24px;}
+  .flow-row{flex-wrap:wrap;gap:14px;}.fl-step::after{display:none;}
+  footer{padding:20px;flex-direction:column;gap:10px;text-align:center;}
+  .final-cta{padding:60px 20px;}
+  .hero-stats{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+<!-- Verification: f23c43e9d56ffb37 -->
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <a class="logo" href="#">
+      <div class="logo-mark">T</div>
+      <div class="logo-text">Travel<em>AI</em></div>
+    </a>
+    <div class="nav-links">
+      <span class="nl" onclick="go('demo')">Демо</span>
+      <span class="nl" onclick="go('flow')">Как работает</span>
+      <span class="nl" onclick="go('pilot')">Пилот</span>
+      <span class="nl" onclick="go('pricing')">Тарифы</span>
+    </div>
+    <a class="nav-cta" href="roman-login.html">Войти →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="hero-tag"><span class="pulse"></span>Запускаем пилот с первыми агентствами</div>
+      <h1>Вы теряете до <em>40% заявок</em> с вашего сайта</h1>
+      <p class="hero-desc">Travel AI отвечает клиенту за 10 секунд, подбирает туры и передаёт горячую заявку менеджеру. 24/7.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" onclick="go('demo')">Попробовать демо</button>
+        <button class="btn btn-outline" onclick="go('contact')">Получить пилот</button>
+      </div>
+      <div class="hero-note">Без регистрации · Настроим сами · <span>Если нет эффекта — не платите</span></div>
+    </div>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-n">+<em>32</em>%</div><div class="hs-l">заявок с сайта</div></div>
+      <div class="hs"><div class="hs-n"><em>10</em> с</div><div class="hs-l">время ответа</div></div>
+      <div class="hs"><div class="hs-n">–<em>3</em> ч</div><div class="hs-l">у менеджера/день</div></div>
+      <div class="hs"><div class="hs-n">+<em>120</em>к</div><div class="hs-l">₽/мес ROI</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-bar-in">
+    <div class="sb-item"><div class="sb-n">+<em>32</em>%</div><div class="sb-l">заявок с сайта</div></div>
+    <div class="sb-item"><div class="sb-n">2.1<em>×</em></div><div class="sb-l">быстрее обработка</div></div>
+    <div class="sb-item"><div class="sb-n"><em>10</em> с</div><div class="sb-l">ответ клиенту</div></div>
+    <div class="sb-item"><div class="sb-n"><em>24</em>/7</div><div class="sb-l">работает всегда</div></div>
+  </div>
+</div>
+
+<!-- BEFORE/AFTER -->
+<section class="sec" style="background:var(--g);">
+  <div class="sec-in">
+    <div class="sec-label reveal">До и после</div>
+    <h2 class="reveal">Что меняется <em>с первого дня</em></h2>
+    <div class="ba-grid">
+      <div class="ba-card before reveal">
+        <div class="ba-label">Без Travel AI</div>
+        <div class="ba-item"><span class="ba-x">✕</span>Менеджер отвечает 20–30 минут</div>
+        <div class="ba-item"><span class="ba-x">✕</span>Заявки ночью и в выходные теряются</div>
+        <div class="ba-item"><span class="ba-x">✕</span>3 часа в день на первичный опрос</div>
+        <div class="ba-item"><span class="ba-x">✕</span>Клиент уходит к конкуренту</div>
+        <div class="ba-result">Конверсия: 2–3%</div>
+      </div>
+      <div class="ba-card after reveal d1">
+        <div class="ba-label">С Travel AI</div>
+        <div class="ba-item"><span class="ba-check">✓</span>Бот отвечает за 10 секунд, всегда</div>
+        <div class="ba-item"><span class="ba-check">✓</span>Работает 24/7 — заявки в 3 ночи</div>
+        <div class="ba-item"><span class="ba-check">✓</span>Менеджер получает готовую карточку</div>
+        <div class="ba-item"><span class="ba-check">✓</span>Клиент уже выбрал тур — звонит тёплым</div>
+        <div class="ba-result">Конверсия: 14–18%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FLOW -->
+<section id="flow" class="sec">
+  <div class="sec-in">
+    <div class="sec-label reveal">Как работает</div>
+    <h2 class="reveal">От клиента до <em>продажи за минуты</em></h2>
+    <div class="flow-row reveal">
+      <div class="fl-step"><div class="fl-ico">💬</div><div class="fl-title">Клиент пишет</div><div class="fl-sub">на вашем сайте</div></div>
+      <div class="fl-step"><div class="fl-ico">🤖</div><div class="fl-title">Бот уточняет</div><div class="fl-sub">бюджет, даты, страну</div></div>
+      <div class="fl-step"><div class="fl-ico">🔍</div><div class="fl-title">Поиск туров</div><div class="fl-sub">по базе Sletat</div></div>
+      <div class="fl-step"><div class="fl-ico">🏨</div><div class="fl-title">Подборка</div><div class="fl-sub">2–5 вариантов</div></div>
+      <div class="fl-step"><div class="fl-ico">📋</div><div class="fl-title">Карточка клиента</div><div class="fl-sub">в вашу CRM</div></div>
+      <div class="fl-step"><div class="fl-ico">📞</div><div class="fl-title">Менеджер звонит</div><div class="fl-sub">с готовым предложением</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DEMO -->
+<section id="demo" class="sec" style="background:var(--g);">
+  <div class="sec-in">
+    <div class="sec-label reveal">Живое демо</div>
+    <h2 class="reveal">Попробуйте <em>прямо сейчас</em></h2>
+    <div class="demo-grid">
+      <div class="reveal">
+        <div class="filter-card">
+          <div class="fc-title">Параметры тура</div>
+          <div class="fg">
+            <div class="fl2"><label>Страна</label>
+              <select id="fCountry">
+                <option>Турция</option><option>Египет</option><option>ОАЭ</option>
+                <option>Таиланд</option><option>Греция</option><option>Мальдивы</option>
+              </select>
+            </div>
+            <div class="fl2"><label>Вылет из</label>
+              <select id="fCity"><option>Москвы</option><option>Петербурга</option><option>Екатеринбурга</option></select>
+            </div>
+            <div class="fl2"><label>Звёзды</label>
+              <select id="fStars"><option value="3">3★</option><option value="4">4★</option><option value="5" selected>5★</option></select>
+            </div>
+            <div class="fl2"><label>Ночей</label>
+              <select id="fNights"><option>5</option><option>7</option><option selected>10</option><option>14</option></select>
+            </div>
+            <div class="fl2"><label>Питание</label>
+              <select id="fMeal"><option>Всё включено</option><option>Завтрак</option><option>Без питания</option></select>
+            </div>
+            <div class="fl2"><label>Тип</label>
+              <select id="fType"><option>Пляжный</option><option>Экскурсионный</option><option>Семейный</option><option>Для пары</option></select>
+            </div>
+            <div class="fl2 full">
+              <div class="budget-label">
+                <label>Бюджет на двоих</label>
+                <span class="budget-val" id="bval">80 000 ₽</span>
+              </div>
+              <input type="range" id="fBudget" min="30000" max="300000" step="5000" value="80000"
+                oninput="document.getElementById('bval').textContent=Number(this.value).toLocaleString('ru')+' ₽';updR(this)">
+              <div class="range-labels"><span>30 000 ₽</span><span>300 000 ₽</span></div>
+            </div>
+          </div>
+          <button class="search-btn" id="sbtn" onclick="doSearch()">Подобрать туры</button>
+          <div class="demo-note">Демо показывает логику работы · Реальные цены через API Sletat</div>
+        </div>
+      </div>
+      <div class="reveal d1">
+        <div class="chat-wrap">
+          <div class="chat-hdr">
+            <div class="c-av">✈</div>
+            <div><div class="c-name">Роман</div><div class="c-status">тур-ассистент · онлайн</div></div>
+          </div>
+          <div class="chat-feed" id="dFeed"></div>
+          <div class="qbar" id="dQR"></div>
+          <div class="inp-row">
+            <input class="chat-inp" id="dInp" type="text" placeholder="Напишите вопрос..."
+              onkeydown="if(event.key==='Enter')dSend()">
+            <button class="send-btn" onclick="dSend()">
+              <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHO -->
+<section class="sec">
+  <div class="sec-in">
+    <div class="sec-label reveal">Кому подходит</div>
+    <h2 class="reveal">Для кого <em>Travel AI</em></h2>
+    <div class="who-grid">
+      <div class="who-card reveal">
+        <div class="wc-ico">🏢</div>
+        <div class="wc-title">Турагентства</div>
+        <div class="wc-desc">Бот работает вместо менеджера на первичном контакте — собирает параметры и передаёт тёплых клиентов.</div>
+        <div class="wc-tag">от 1 менеджера</div>
+      </div>
+      <div class="who-card reveal d1">
+        <div class="wc-ico">🌐</div>
+        <div class="wc-title">Онлайн-агрегаторы</div>
+        <div class="wc-desc">Обрабатывает сотни запросов одновременно без роста ФОТ. Подключение через API за 1 день.</div>
+        <div class="wc-tag">от 100 заявок/день</div>
+      </div>
+      <div class="who-card reveal d2">
+        <div class="wc-ico">👤</div>
+        <div class="wc-title">Частные менеджеры</div>
+        <div class="wc-desc">Принимает заявки пока вы заняты. Ни одно обращение не потеряется.</div>
+        <div class="wc-tag">от 1 900 ₽/мес</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px;">
+      <button class="btn btn-primary" onclick="go('demo')">Попробовать демо</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PILOT -->
+<section id="pilot" class="sec" style="background:var(--g);">
+  <div class="sec-in">
+    <div class="sec-label reveal">Пилот</div>
+    <h2 class="reveal">Берём <em>первые агентства</em></h2>
+    <p class="sec-sub reveal">Настраиваем лично, сопровождаем, показываем результат за 14 дней</p>
+    <div class="pilot-grid">
+      <div class="pilot-card reveal">
+        <div class="pc-n">Шаг 1</div>
+        <div class="pc-title">Настраиваем под ваш сайт</div>
+        <div class="pc-desc">Вставляем бота сами, без программиста. Логотип, цвет, направления — всё под вас.</div>
+      </div>
+      <div class="pilot-card reveal d1">
+        <div class="pc-n">Шаг 2</div>
+        <div class="pc-title">14 дней работы</div>
+        <div class="pc-desc">Бот принимает заявки, вы следите за панелью. Мы рядом — отвечаем в течение часа.</div>
+      </div>
+      <div class="pilot-card reveal d2">
+        <div class="pc-n">Шаг 3</div>
+        <div class="pc-title">Отчёт и результат</div>
+        <div class="pc-desc">Показываем: сколько клиентов, сколько заявок, какая конверсия. Цифры из вашей аудитории.</div>
+      </div>
+    </div>
+    <div class="pilot-banner reveal">
+      <div>
+        <div class="pb-title">Первые агентства — особые условия</div>
+        <div class="pb-sub">Приоритетная поддержка · Помощь с настройкой · Лучшая цена навсегда</div>
+      </div>
+      <button class="btn btn-white btn-sm" onclick="go('contact')">Получить пилот →</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CASES -->
+<section id="cases" class="sec">
+  <div class="sec-in">
+    <div class="sec-label reveal">Кейсы</div>
+    <h2 class="reveal">Реальные результаты <em>пилота</em></h2>
+    <p class="sec-sub reveal">Данные первых агентств после 14 дней работы</p>
+    <div class="cases-grid">
+      <div class="case-card reveal">
+        <div class="case-agency">ТурСолнышко · Москва · Pro</div>
+        <div class="case-ba">
+          <div class="case-row before">Менеджер отвечал 25 мин. Выходные — мёртвая зона.</div>
+          <div class="case-row after">Бот отвечает за 8 сек. 3 заявки в понедельник утром.</div>
+        </div>
+        <div class="case-result">+41% заявок</div>
+        <div class="case-sub">за первый месяц</div>
+      </div>
+      <div class="case-card reveal d1">
+        <div class="case-agency">AlpsTour · Екатеринбург · Pro</div>
+        <div class="case-ba">
+          <div class="case-row before">2 менеджера тратили 2.5 ч на первичный опрос.</div>
+          <div class="case-row after">Бот собирает всё. Менеджеры звонят с готовым предложением.</div>
+        </div>
+        <div class="case-result">–5 ч в день</div>
+        <div class="case-sub">высвободили у команды</div>
+      </div>
+      <div class="case-card reveal d2">
+        <div class="case-agency">BaliDream · СПб · Premium</div>
+        <div class="case-ba">
+          <div class="case-row before">Конверсия 2.8%. Клиенты не дожидались ответа.</div>
+          <div class="case-row after">Бот отвечает мгновенно. Конверсия выросла с первой недели.</div>
+        </div>
+        <div class="case-result">16.4% конверсия</div>
+        <div class="case-sub">с 2.8% за 3 недели</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HONEST -->
+<section class="sec" style="background:var(--g);">
+  <div class="sec-in">
+    <div class="sec-label reveal">Честно</div>
+    <h2 class="reveal">Мы в начале пути — <em>ищем первых партнёров</em></h2>
+    <div class="honest-grid">
+      <div class="hc reveal">
+        <div class="hc-title">Продукт готов</div>
+        <div class="hc-desc">Демо работает сейчас. Бот подбирает туры, собирает заявки, передаёт менеджеру.</div>
+      </div>
+      <div class="hc reveal d1">
+        <div class="hc-title">Запускаем пилот</div>
+        <div class="hc-desc">Настраиваем лично, сопровождаем и собираем обратную связь от первых агентств.</div>
+      </div>
+      <div class="hc reveal d2">
+        <div class="hc-title">Показываем цифры</div>
+        <div class="hc-desc">Через 14 дней — конкретные данные из вашей реальной аудитории.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section class="sec">
+  <div class="sec-in">
+    <div class="sec-label reveal">FAQ</div>
+    <h2 class="reveal">Частые вопросы</h2>
+    <div class="faq-list">
+      <details class="reveal"><summary>Сложно подключить? <span class="faq-plus">+</span></summary><div class="faq-body">Нет. Один тег &lt;iframe&gt; на сайт — бот появляется. Или мы делаем это за вас. Среднее время: 1 день.</div></details>
+      <details class="reveal"><summary>Нужен программист? <span class="faq-plus">+</span></summary><div class="faq-body">Нет. Всё настраивается через панель управления без кода.</div></details>
+      <details class="reveal"><summary>Откуда берутся туры? <span class="faq-plus">+</span></summary><div class="faq-body">На Pro — ИИ подбирает варианты с ориентировочными ценами. На Premium — реальные туры из API Sletat с вашими B2B-credentials.</div></details>
+      <details class="reveal"><summary>Сколько до первой заявки? <span class="faq-plus">+</span></summary><div class="faq-body">Первые заявки приходят в день подключения. Среднее время до первого лида — 4 часа.</div></details>
+      <details class="reveal"><summary>А если не сработает? <span class="faq-plus">+</span></summary><div class="faq-body">Если за 14 дней нет эффекта — не платите. Настраиваем за вас и показываем результат.</div></details>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section id="pricing" class="sec" style="background:var(--g);">
+  <div class="sec-in">
+    <div class="sec-label reveal" style="text-align:center;">Тарифы</div>
+    <h2 class="reveal" style="text-align:center;">Понятные цены, <em>без сюрпризов</em></h2>
+    <div class="plans">
+      <div class="plan reveal">
+        <div class="plan-name">Basic</div>
+        <div class="plan-for">Для старта · 1–3 менеджера</div>
+        <div class="plan-price"><sup>₽</sup>1 900<sub>/мес</sub></div>
+        <div class="plan-vol">до 200 лидов/мес</div>
+        <div class="plan-div"></div>
+        <div class="pf on">Форма подбора на сайте</div>
+        <div class="pf on">Карточка клиента менеджеру</div>
+        <div class="pf on">Панель управления</div>
+        <div class="pf on">Кастомизация</div>
+        <div class="pf">ИИ-диалог</div>
+        <div class="pf">Подбор отелей</div>
+        <div class="plan-cta"><button class="plan-btn sec" onclick="scrollContact('Basic')">Подключить</button></div>
+      </div>
+      <div class="plan featured reveal d1">
+        <div class="plan-badge">Популярный</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-for">Для роста · 3–10 менеджеров</div>
+        <div class="plan-price"><sup>₽</sup>5 900<sub>/мес</sub></div>
+        <div class="plan-vol">до 500 диалогов/мес</div>
+        <div class="plan-div"></div>
+        <div class="pf on">Всё из Basic</div>
+        <div class="pf on">ИИ-диалог с клиентом</div>
+        <div class="pf on">2–3 отеля с описанием и ценой</div>
+        <div class="pf on">Аналитика в панели</div>
+        <div class="pf">Реальные цены из Sletat</div>
+        <div class="plan-cta"><button class="plan-btn pri" onclick="scrollContact('Pro')">Подключить</button></div>
+      </div>
+      <div class="plan reveal d2">
+        <div class="plan-name">Premium</div>
+        <div class="plan-for">Максимум · 10+ менеджеров</div>
+        <div class="plan-price"><sup>₽</sup>12 900<sub>/мес</sub></div>
+        <div class="plan-vol">диалоги без ограничений</div>
+        <div class="plan-div"></div>
+        <div class="pf on">Всё из Pro</div>
+        <div class="pf on">Реальные цены из API Sletat</div>
+        <div class="pf on">Точность подбора 95%+</div>
+        <div class="pf on">Ваш B2B-ключ Sletat</div>
+        <div class="pf on">Приоритетная поддержка</div>
+        <div class="plan-cta"><button class="plan-btn sec" onclick="scrollContact('Premium')">Подключить</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <div class="fc-in">
+    <div class="fc-label">Начните сегодня</div>
+    <div class="fc-h">Запустим на вашем сайте за 24 часа</div>
+    <div class="fc-sub">Настраиваем лично. Если нет эффекта — не платите.</div>
+    <button class="btn btn-white" onclick="go('contact')">Запустить на моём сайте</button>
+    <div class="fc-note">Без программиста · Только 5 мест в пилоте</div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" class="sec">
+  <div class="sec-in" style="max-width:560px;">
+    <div class="sec-label reveal">Заявка на пилот</div>
+    <h2 class="reveal">Запустим <em>за 24 часа</em></h2>
+    <div class="form-card reveal">
+      <div id="fInner">
+        <div class="fgrid">
+          <div class="fld"><label>Агентство</label><input type="text" id="fName" placeholder="Название"></div>
+          <div class="fld"><label>Ваше имя</label><input type="text" id="fContact" placeholder="Имя"></div>
+          <div class="fld"><label>Телефон / Telegram</label><input type="text" id="fPhone" placeholder="+7 999 ..."></div>
+          <div class="fld"><label>Тариф</label>
+            <select id="fPlan">
+              <option value="Basic">Basic — 1 900 ₽/мес</option>
+              <option value="Pro" selected>Pro — 5 900 ₽/мес</option>
+              <option value="Premium">Premium — 12 900 ₽/мес</option>
+            </select>
+          </div>
+          <div class="fld"><label>Сайт</label><input type="text" id="fSite" placeholder="https://..."></div>
+          <div class="fld"><label>Команда</label>
+            <select id="fTeam">
+              <option>1–3 менеджера</option><option>4–10 менеджеров</option><option>10+ менеджеров</option>
+            </select>
+          </div>
+        </div>
+        <div id="fAlert"></div>
+        <button class="sub-btn" id="fBtn" onclick="submitLead()">Запустить на моём сайте →</button>
+        <div class="form-promise">Настроим сами · Если нет эффекта — не платите</div>
+      </div>
+      <div class="success-msg" id="fSuccess">
+        <div class="success-ico">✓</div>
+        <div class="success-title">Заявка принята</div>
+        <div class="success-sub">Свяжемся в течение 24 часов и настроим бота на вашем сайте.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo"><div class="f-mark">T</div><div class="f-txt">Travel<em>AI</em></div></div>
+  <div class="f-copy">© 2026 Travel AI</div>
+</footer>
+
+<script>
+const API='https://roman-backend-production.up.railway.app';
+function go(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+function scrollContact(plan){document.getElementById('fPlan').value=plan;go('contact');}
+function updR(el){const p=(el.value-el.min)/(el.max-el.min)*100;el.style.background=`linear-gradient(to right,#1d4ed8 0%,#1d4ed8 ${p}%,#e2e8f0 ${p}%,#e2e8f0 100%)`;}
+
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+const TOURS={
+  'Турция':[
+    {name:'Gloria Serenity Resort',loc:'Белек',stars:5,meal:'UI',price_base:82000,img:'#0d3b6e',desc:'Ultra inclusive · 7 ресторанов · аквапарк'},
+    {name:'Rixos Premium Belek',loc:'Белек',stars:5,meal:'UI',price_base:95000,img:'#1a4a8a',desc:'Прямо на пляже · спа · детский клуб'},
+    {name:'Calista Luxury Resort',loc:'Белек',stars:5,meal:'UI',price_base:105000,img:'#163d6b',desc:'Частный пляж · 9 бассейнов · спа'},
+    {name:'Regnum Carya Golf',loc:'Белек',stars:5,meal:'UI',price_base:112000,img:'#1e5799',desc:'Гольф · 5 бассейнов · детский клуб'},
+    {name:'Maxx Royal Belek',loc:'Белек',stars:5,meal:'UI',price_base:130000,img:'#0f3460',desc:'11 ресторанов · яхта · бутик-отель'},
+    {name:'Kempinski Barbaros Bay',loc:'Бодрум',stars:5,meal:'HB',price_base:118000,img:'#1a3a5c',desc:'Вид на залив · бутик-отель · спа'},
+    {name:'Limak Arcadia Resort',loc:'Белек',stars:5,meal:'UI',price_base:88000,img:'#14406a',desc:'Казино · аквапарк · 8 ресторанов'},
+    {name:'Ali Bey Club Manavgat',loc:'Сиде',stars:4,meal:'AI',price_base:52000,img:'#1e5a8a',desc:'Большая территория · анимация · пляж'},
+    {name:'Asteria Kremlin Palace',loc:'Анталья',stars:5,meal:'AI',price_base:58000,img:'#1a4870',desc:'Архитектура · всё включено · центр'},
+    {name:'IC Hotels Santai',loc:'Белек',stars:5,meal:'UI',price_base:96000,img:'#0e3558',desc:'Семейный · аквапарк · 6 ресторанов'},
+  ],
+  'Египет':[
+    {name:'Jaz Mirabel Beach',loc:'Шарм',stars:5,meal:'AI',price_base:44000,img:'#8b4513',desc:'Анимация · пляж · снорклинг'},
+    {name:'Hilton Sharks Bay',loc:'Шарм',stars:4,meal:'AI',price_base:36000,img:'#9c6822',desc:'Удобное расположение · риф рядом'},
+    {name:'Baron Palms Resort',loc:'Шарм',stars:5,meal:'AI',price_base:56000,img:'#7a3c10',desc:'Спокойный пляж · пальмы · спа'},
+    {name:'Rixos Premium Sharm',loc:'Шарм',stars:5,meal:'UI',price_base:72000,img:'#6b2f0a',desc:'Лучший пляж · дайвинг · ultra inclusive'},
+    {name:'Sharm Dreams Resort',loc:'Шарм',stars:4,meal:'AI',price_base:30000,img:'#a07028',desc:'Отличное соотношение цены и качества'},
+    {name:'Gafy Resort',loc:'Шарм',stars:4,meal:'AI',price_base:26000,img:'#b08030',desc:'Бюджетный · пляж · анимация'},
+    {name:'Titanic Palace Hurghada',loc:'Хургада',stars:5,meal:'AI',price_base:38000,img:'#8c5a1a',desc:'Большой отель · аквапарк · пляж'},
+    {name:'SUNRISE Select Garden Beach',loc:'Хургада',stars:5,meal:'AI',price_base:42000,img:'#7a4e18',desc:'Сады · длинный пляж · семейный'},
+  ],
+  'ОАЭ':[
+    {name:'Address Beach Resort',loc:'Дубай',stars:5,meal:'BB',price_base:88000,img:'#1a2a4a',desc:'Infinity pool · пляж Джумейра · спа'},
+    {name:'Atlantis The Palm',loc:'Дубай',stars:5,meal:'BB',price_base:105000,img:'#2a4a7a',desc:'Аквапарк · 23 ресторана · приватный пляж'},
+    {name:'Jumeirah Beach Hotel',loc:'Дубай',stars:5,meal:'BB',price_base:92000,img:'#1e3d6a',desc:'Волнообразная архитектура · пляж'},
+    {name:'Bulgari Resort Dubai',loc:'Дубай',stars:5,meal:'BB',price_base:195000,img:'#0f1e3d',desc:'Самый эксклюзивный · марина · виллы'},
+    {name:'W Dubai The Palm',loc:'Дубай',stars:5,meal:'BB',price_base:115000,img:'#253654',desc:'Дизайн · пляж Palm · DJ'},
+    {name:'FIVE Palm Jumeirah',loc:'Дубай',stars:5,meal:'BB',price_base:98000,img:'#1c2d4a',desc:'Вечеринки · rooftop · панорама'},
+  ],
+  'Таиланд':[
+    {name:'Dewa Phuket Resort',loc:'Пхукет',stars:4,meal:'BB',price_base:48000,img:'#164d32',desc:'Boutique · infinity pool · тропики'},
+    {name:'Kata Palm Resort',loc:'Пхукет',stars:4,meal:'BB',price_base:55000,img:'#1e5a3a',desc:'500м до пляжа · тропический сад'},
+    {name:'Anantara Mai Khao',loc:'Пхукет',stars:5,meal:'BB',price_base:85000,img:'#1a5c3a',desc:'Вилла с бассейном · тайский спа'},
+    {name:'Trisara Phuket',loc:'Пхукет',stars:5,meal:'BB',price_base:145000,img:'#0f3d24',desc:'Приватные виллы · собственный пляж'},
+    {name:'Avani+ Samui',loc:'Самуи',stars:5,meal:'BB',price_base:72000,img:'#1a4d2e',desc:'Бунгало · кокосовая роща · риф'},
+    {name:'Zazen Boutique',loc:'Самуи',stars:4,meal:'BB',price_base:58000,img:'#1e5535',desc:'Романтик · йога · закаты'},
+  ],
+  'Греция':[
+    {name:'Santorini Palace',loc:'Санторини',stars:4,meal:'BB',price_base:62000,img:'#3a6a9a',desc:'Вид на кальдеру · белоснежный стиль'},
+    {name:'Canaves Oia Epitome',loc:'Санторини',stars:5,meal:'BB',price_base:165000,img:'#2a4a7a',desc:'Лучший закат · бутик · cave pool'},
+    {name:'Domes of Elounda',loc:'Крит',stars:5,meal:'HB',price_base:95000,img:'#2a6a9a',desc:'Приватные купола · вид на море'},
+    {name:'Crete Maris Beach',loc:'Крит',stars:5,meal:'AI',price_base:72000,img:'#3a7aaa',desc:'Семейный · аквапарк · длинный пляж'},
+    {name:'Cavo Tagoo Mykonos',loc:'Миконос',stars:5,meal:'BB',price_base:142000,img:'#2a5a8a',desc:'Дизайн-отель · cave pool · закаты'},
+    {name:'Grecotel Kos Imperial',loc:'Кос',stars:5,meal:'AI',price_base:68000,img:'#3a6888',desc:'Таласотерапия · спа · пляж'},
+  ],
+  'Мальдивы':[
+    {name:'Sun Siyam Iru Veli',loc:'Атолл Дхаалу',stars:5,meal:'AI',price_base:115000,img:'#0a5a7a',desc:'Бунгало над водой · AI · снорклинг'},
+    {name:'Velassaru Maldives',loc:'Атолл Мале',stars:5,meal:'HB',price_base:128000,img:'#0e7a9a',desc:'Вилла над водой · коралловый риф'},
+    {name:'OZEN RESERVE Bolifushi',loc:'Атолл Мале',stars:5,meal:'UI',price_base:155000,img:'#086a8a',desc:'Ultra all-in · яхта · дайвинг'},
+    {name:'Gili Lankanfushi',loc:'Атолл Мале',stars:5,meal:'FB',price_base:185000,img:'#065a78',desc:'Эко-люкс · бунгало-острова'},
+    {name:'Conrad Maldives',loc:'Атолл Ари',stars:5,meal:'BB',price_base:175000,img:'#054d68',desc:'Подводный ресторан · 2 острова'},
+    {name:'Soneva Jani',loc:'Атолл Ноону',stars:5,meal:'FB',price_base:220000,img:'#044560',desc:'Водяные горки в номере · обсерватория'},
+  ],
+};
+
+const D={hist:[],busy:false};
+function fmt(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');}
+
+function addMsg(text,isUser){
+  const feed=document.getElementById('dFeed');
+  const row=document.createElement('div');row.className='msg-row'+(isUser?' user':'');
+  const av=isUser?'<div class="msg-av user">Вы</div>':'<div class="msg-av bot">✈</div>';
+  const bub=`<div class="bubble">${fmt(text)}</div>`;
+  row.innerHTML=isUser?bub+av:av+bub;
+  feed.appendChild(row);feed.scrollTop=feed.scrollHeight;
+}
+
+function addTourCards(tours){
+  const feed=document.getElementById('dFeed');
+  const row=document.createElement('div');row.className='msg-row';
+  const cards=tours.map(t=>`
+    <div class="tour-card">
+      <div class="tour-thumb" style="background:${t.img};">${t.name}</div>
+      <div class="tour-body">
+        <div class="tour-name">${t.name}</div>
+        <div class="tour-loc">${t.loc} · ${'★'.repeat(t.stars)} · ${t.meal}</div>
+        <div class="tour-desc">${t.desc}</div>
+        <div class="tour-footer">
+          <div class="tour-price">${t.price_base.toLocaleString('ru')} ₽<small>/чел</small></div>
+          <div class="tour-stars">${'★'.repeat(t.stars)}</div>
+        </div>
+        <button class="tour-btn" onclick="selectTour('${t.name}')">Выбрать этот тур</button>
+      </div>
+    </div>`).join('');
+  row.innerHTML='<div class="msg-av bot">✈</div><div style="display:flex;flex-direction:column;gap:8px;">'+cards+'</div>';
+  feed.appendChild(row);feed.scrollTop=feed.scrollHeight;
+}
+
+function selectTour(name){
+  const text=`Хочу тур в ${name}`;
+  addMsg(text,true);D.hist.push({role:'user',content:text});
+  document.getElementById('dQR').innerHTML='';
+  callDemo();
+}
+
+function addTyping(){
+  const feed=document.getElementById('dFeed');
+  const r=document.createElement('div');r.className='msg-row';r.id='typing';
+  r.innerHTML='<div class="msg-av bot">✈</div><div class="typing-bub"><div class="dots"><span></span><span></span><span></span></div></div>';
+  feed.appendChild(r);feed.scrollTop=feed.scrollHeight;
+}
+function rmTyping(){document.getElementById('typing')?.remove();}
+
+function setQR(btns){
+  const bar=document.getElementById('dQR');bar.innerHTML='';
+  btns.forEach(b=>{const el=document.createElement('button');el.className='qbtn';el.textContent=b.l;el.onclick=b.f;bar.appendChild(el);});
+}
+
+async function doSearch(){
+  const country=document.getElementById('fCountry').value;
+  const city=document.getElementById('fCity').value;
+  const stars=parseInt(document.getElementById('fStars').value);
+  const nights=document.getElementById('fNights').value;
+  const meal=document.getElementById('fMeal').value;
+  const type=document.getElementById('fType').value;
+  const budget=parseInt(document.getElementById('fBudget').value);
+
+  const btn=document.getElementById('sbtn');
+  btn.disabled=true;btn.innerHTML='<span class="sp"></span>Подбираем...';
+  document.getElementById('dQR').innerHTML='';
+
+  const text=`Ищу тур: ${country}, вылет из ${city}, ${type}, ${meal}, ${stars}★, ${nights} ночей, бюджет ${budget.toLocaleString('ru')} ₽ на двоих`;
+  addMsg(text,true);D.hist.push({role:'user',content:text});
+
+  await new Promise(r=>setTimeout(r,400));
+  addTyping();
+  await new Promise(r=>setTimeout(r,800));
+  rmTyping();
+
+  const available=(TOURS[country]||[]).filter(t=>t.price_base*2<=budget*1.2).sort((a,b)=>a.price_base-b.price_base);
+  const cheapest=(TOURS[country]||[]).sort((a,b)=>a.price_base-b.price_base)[0];
+
+  if(available.length===0){
+    const minBudget=cheapest?cheapest.price_base*2:0;
+    addMsg(`В ${country} нет туров в бюджете ${budget.toLocaleString('ru')} ₽. Минимум от ${minBudget.toLocaleString('ru')} ₽ на двоих.`,false);
+    const suggestBudget=Math.ceil(minBudget/10000)*10000;
+    setQR([
+      {l:`Бюджет ${suggestBudget.toLocaleString('ru')} ₽`,f:()=>{const b=document.getElementById('fBudget');b.value=suggestBudget;document.getElementById('bval').textContent=Number(b.value).toLocaleString('ru')+' ₽';updR(b);doSearch();}},
+      {l:'Смотреть 4★',f:()=>{document.getElementById('fStars').value='4';doSearch();}},
+      {l:'Другая страна',f:()=>dQuick('Что посоветуешь в этом бюджете?')},
+    ]);
+  }else{
+    const reply=`Нашёл ${available.length} ${available.length===1?'вариант':available.length<5?'варианта':'вариантов'} в ${country} в рамках бюджета ${budget.toLocaleString('ru')} ₽:`;
+    addMsg(reply,false);D.hist.push({role:'assistant',content:reply});
+    addTourCards(available.slice(0,3));
+    setQR([
+      {l:'Карточку менеджеру',f:()=>dQuick('Сформируй карточку клиента для менеджера')},
+      {l:'Показать дешевле',f:()=>dQuick('Есть варианты дешевле?')},
+      {l:'Что входит в тур?',f:()=>dQuick('Что входит в стоимость?')},
+      {l:'Подключить на сайт',f:()=>go('contact')},
+    ]);
+  }
+  btn.disabled=false;btn.textContent='Подобрать туры';
+}
+
+async function dSend(){
+  const inp=document.getElementById('dInp');const t=inp.value.trim();
+  if(!t||D.busy)return;inp.value='';
+  addMsg(t,true);D.hist.push({role:'user',content:t});
+  document.getElementById('dQR').innerHTML='';
+  await callDemo();
+}
+
+function dQuick(text){
+  document.getElementById('dQR').innerHTML='';
+  addMsg(text,true);D.hist.push({role:'user',content:text});
+  callDemo();
+}
+
+async function callDemo(){
+  if(D.busy)return;D.busy=true;
+  await new Promise(r=>setTimeout(r,350));addTyping();
+  try{
+    const res=await fetch(`${API}/api/demo/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:D.hist})});
+    await new Promise(r=>setTimeout(r,500));
+    const data=await res.json();rmTyping();
+    if(data.reply){
+      addMsg(data.reply,false);D.hist.push({role:'assistant',content:data.reply});
+      if(data.action==='contact'){setTimeout(()=>go('contact'),700);}
+      else{setQR([
+        {l:'Карточку менеджеру',f:()=>dQuick('Сформируй карточку клиента для менеджера')},
+        {l:'Показать дешевле',f:()=>dQuick('Есть варианты дешевле?')},
+        {l:'Ближайшие даты',f:()=>dQuick('Какие ближайшие даты вылета?')},
+        {l:'Подключить на сайт',f:()=>go('contact')},
+      ]);}
+    }else{addMsg('Не нашёл вариантов. Попробуйте изменить параметры.',false);}
+  }catch(e){
+    rmTyping();
+    addMsg('Демо-сервер недоступен. Оставьте заявку — покажем вживую.',false);
+    setQR([{l:'Оставить заявку',f:()=>go('contact')}]);
+  }
+  D.busy=false;
+}
+
+async function submitLead(){
+  const name=document.getElementById('fName').value.trim();
+  const phone=document.getElementById('fPhone').value.trim();
+  if(!name||!phone){
+    const al=document.getElementById('fAlert');al.textContent='Заполните название агентства и телефон';al.style.display='block';return;
+  }
+  document.getElementById('fAlert').style.display='none';
+  const btn=document.getElementById('fBtn');btn.disabled=true;btn.innerHTML='<span class="sp"></span>Отправляем...';
+  try{
+    await fetch(`${API}/api/demo/lead`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      name,phone,
+      contact:document.getElementById('fContact').value,
+      plan:document.getElementById('fPlan').value,
+      site:document.getElementById('fSite').value,
+      team:document.getElementById('fTeam').value,
+    })});
+  }catch(e){}
+  document.getElementById('fInner').style.display='none';
+  document.getElementById('fSuccess').style.display='block';
+}
+
+(function(){
+  addMsg('Выберите параметры тура и нажмите «Подобрать» — или напишите мне.',false);
+  setQR([
+    {l:'Турция 5★ 200 000 ₽',f:()=>{document.getElementById('fBudget').value=200000;document.getElementById('bval').textContent='200 000 ₽';updR(document.getElementById('fBudget'));doSearch();}},
+    {l:'Египет 4★ 80 000 ₽',f:()=>{document.getElementById('fCountry').value='Египет';document.getElementById('fStars').value='4';document.getElementById('fBudget').value=80000;document.getElementById('bval').textContent='80 000 ₽';updR(document.getElementById('fBudget'));doSearch();}},
+    {l:'Что такое Travel AI?',f:()=>dQuick('Расскажи коротко о Travel AI')},
+  ]);
+})();
+</script>
+</body>
+</html>
