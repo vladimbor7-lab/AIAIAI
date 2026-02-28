@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Disallow: /roman-agency-panel.html
+Disallow: /api/
+Disallow: /*.json$
+Crawl-delay: 1
+Sitemap: https://travel-ai.ru/sitemap.xml
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
+Sitemap: https://travel-ai.ru/sitemap.xml
+
+User-agent: Googlebot
+Allow: /
+Sitemap: https://travel-ai.ru/sitemap.xml
